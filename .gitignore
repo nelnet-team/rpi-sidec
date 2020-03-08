@@ -24,6 +24,8 @@ auto-save-list
 ###################
 *.leetmp
 leetmp.*
+tmp/
+tmp/*
 
 # Packages #
 ############
