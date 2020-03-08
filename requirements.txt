@@ -1,1 +1,3 @@
 pigpio>=1.44
+RPI.GPIO
+adafruit-circuitpython-seesaw
