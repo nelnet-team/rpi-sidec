@@ -15,6 +15,8 @@ class WifiStatus:
         rawstate = re.search("wpa_state=(\w+)", status)
         if rawstate == None:
             state = "UNKNOWN"
+        elif rawstate.group(1) == "COMPLETED":
+            state = "CONNECTED"
         else:
             state = rawstate.group(1)
         return state
@@ -30,12 +32,3 @@ class WifiStatus:
         else:
             state = rawstate.group(1)
         return state
-
-    def report(self):
-        report = "{} {}".format(self.get_ssid(), self.get_state())
-        return report
-
-
-if __name__ == '__main__':
-    wifiobj = WifiStatus("wlan0")
-    wifiobj.interface_info
