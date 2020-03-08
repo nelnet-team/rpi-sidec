@@ -1,6 +1,8 @@
 netifaces
+psutil
 pigpio>=1.44
 RPI.GPIO
 luma.oled
+board
 adafruit-circuitpython-seesaw
-psutil
+
