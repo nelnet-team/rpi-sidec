@@ -2,6 +2,7 @@ from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
 import time
+import asyncio
 from wifi import wifi_status
 from ip_interface import interface_info
 
@@ -10,7 +11,6 @@ class DisplayInfo:
     def __init__(self):
         self.serial = i2c(port=1, address=0x3C)
         self.device = ssd1306(self.serial, rotate=0)
-        self._running = True
         self.interval = 10
         self.wifi_state = ""
         self.wifi_ssid = ""
@@ -36,13 +36,9 @@ class DisplayInfo:
             draw.text((0, 24), ipaddr, fill="white")
             draw.text((0, 32), self.if_stats, fill="white")
 
-    def display_interface(self):
-        nexttime = 0
-        while self._running:
-            timestamp = time.time()
-            if timestamp >= nexttime:
-                nexttime = timestamp + self.interval
-
+    async def display_interface(self):
+        try:
+            while True:
                 ip_addr = self.interface_info.get_ip()
                 if ip_addr != self.ip_addr:
                     self.redraw = True
@@ -71,3 +67,8 @@ class DisplayInfo:
                 if self.redraw:
                     self.draw_info()
                     self.redraw = False
+
+                await asyncio.sleep(self.interval)
+
+        except asyncio.CancelledError:
+            return ()
