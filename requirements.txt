@@ -3,6 +3,6 @@ psutil
 pigpio>=1.44
 RPI.GPIO
 luma.oled
-board
+adafruit-blinka
 adafruit-circuitpython-seesaw
 
